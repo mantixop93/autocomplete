@@ -1,16 +1,18 @@
+package com.lab.autocomplete;
+
 /**
  * Created by Mantixop on 1/18/16.
  */
 public interface  Trie <T>{
 
-    // Добавляет в Trie пару слово - term, и его вес - weight.
+    // Добавляет в com.lab.autocomplete.Trie пару слово - term, и его вес - weight.
     // В качестве веса используйте длину слова
     public void add(Tuple<T> tuple);
 
-    // есть ли слово в Trie
+    // есть ли слово в com.lab.autocomplete.Trie
     public boolean contains(String word);
 
-    // удаляет слово из Trie
+    // удаляет слово из com.lab.autocomplete.Trie
     public boolean delete(String word);
 
     // итератор по всем словам, обход в ширину
@@ -19,7 +21,7 @@ public interface  Trie <T>{
     // итератор по всем словам, начинающимся с pref, обход в ширину
     public Iterable<String> wordsWithPrefix(String pref);
 
-    // к-во слов в Trie
+    // к-во слов в com.lab.autocomplete.Trie
     public int size();
 
 }

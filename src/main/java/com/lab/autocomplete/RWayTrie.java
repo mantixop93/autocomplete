@@ -1,3 +1,5 @@
+package com.lab.autocomplete;
+
 import java.util.*;
 
 /**
@@ -8,9 +10,11 @@ public class RWayTrie <T> implements Trie <T> {
     private static int R = 26;
     private Node root;
 
-    private class Node{
+
+    private static final class Node <T>{
         T value;
         Object[] next = new Object[R];
+
     }
 
     public void add(Tuple<T> tuple) {
@@ -71,18 +75,12 @@ public class RWayTrie <T> implements Trie <T> {
         return wordsWithPrefix("");
     }
 
-    public Iterable<String> wordsWithPrefix(String pref) {
-        Queue<String> q = new LinkedList<String>();
-        collect(contains(root, pref, 0), pref, q);
-        return q;
-    }
-
-    private void collect(Node x, String pre, Queue<String> q)
-    {
-        if (x == null) return;
-        if (x.value != null) q.add(pre);
-        for (char c = 0; c < R ; c++)
-            collect((Node) x.next[c], pre + (char)(c + 'a'), q);
+    public Iterable<String> wordsWithPrefix(final String pref) {
+        return new Iterable<String>() {
+            public Iterator<String> iterator() {
+                return new TrieIterator(pref);
+            }
+        };
     }
 
     public int size() {
@@ -93,5 +91,59 @@ public class RWayTrie <T> implements Trie <T> {
             iterator.next();
         }
         return size;
+    }
+
+    @Override
+    public String toString() {
+        return words().toString();
+    }
+
+    private class TrieIterator implements Iterator {
+        private Queue<Tuple<Node>> queue = new LinkedList<Tuple<Node>>();
+        private Tuple<Node> nextNode;
+
+        TrieIterator(String pref) {
+            Node iteratorRoot = contains(root,pref,0);
+            if (iteratorRoot != null) {
+                queue.add(new Tuple<Node>(pref, iteratorRoot));
+                nextNode = skipToNextNode();
+            }
+        }
+
+        public boolean hasNext() {
+            if(nextNode != null) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        private Tuple<Node> skipToNextNode() {
+            Tuple<Node> tuple = queue.poll();
+            while (tuple != null) {
+                for (int i = 0; i < R; i++) {
+                    Node nextChild = (Node) tuple.getValue().next[i];
+                    if (nextChild != null) {
+                            queue.add(new Tuple<Node>(tuple.getKey() + (char) (i + 'a'), nextChild));
+                    }
+                }
+                if (tuple.getValue().value!= null) return tuple;
+                tuple = queue.poll();
+            }
+            return null;
+        }
+
+        public Object next() {
+            if(nextNode != null){
+                String result = nextNode.getKey();
+                nextNode = skipToNextNode();
+                return result;
+            }
+            throw new NoSuchElementException();
+        }
+
+        public void remove() {
+
+        }
     }
 }
