@@ -49,6 +49,7 @@ public class PrefixMatchesTest {
     @Test
     public void testAddWord() {
         prefixMatches.add("test");
+        //when(rWayTrie.contains("test")).thenReturn(true);
         verify(rWayTrie).add(new Tuple<Integer>("test", "test".length()));
     }
 
@@ -88,16 +89,27 @@ public class PrefixMatchesTest {
         when(rWayTrie.wordsWithPrefix("te")).thenReturn(Arrays.asList(new String[]{"te", "tes", "test", "testt"}));
         Iterator<String> iterator =  prefixMatches.wordsWithPrefix("te", 2).iterator();
         assertEquals("te", iterator.next());
+        assertEquals("tes", iterator.next());
         assertEquals(iterator.hasNext(), false);
     }
 
     @Test
-    public void testWordsWithPrefixDefaultPostfixLength() {
+    public void testWordsWithPrefixAndDefaultPostfixLength() {
         when(rWayTrie.wordsWithPrefix("te")).thenReturn(Arrays.asList(new String[]{"te", "tes", "test", "testt"}));
         Iterator<String> iterator =  prefixMatches.wordsWithPrefix("te").iterator();
         assertEquals("te", iterator.next());
         assertEquals("tes", iterator.next());
         assertEquals("test", iterator.next());
         assertEquals(iterator.hasNext(), false);
+    }
+
+    @Test
+    public void testAddSeveralEqualWords() {
+        assertEquals(1, prefixMatches.add("test"));
+        when(rWayTrie.contains("test")).thenReturn(true);
+        assertEquals(0, prefixMatches.add("test test test"));
+        verify(rWayTrie, times(1)).add(any(Tuple.class));
+        assertEquals(1, prefixMatches.add("test two test"));
+        verify(rWayTrie, times(2)).add(any(Tuple.class));
     }
 }
