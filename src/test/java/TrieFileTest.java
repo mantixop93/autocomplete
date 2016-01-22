@@ -1,5 +1,5 @@
-import com.lab.autocomplete.RWayTrie;
-import com.lab.autocomplete.Tuple;
+import com.lab.autocomplete.Trie.RWayTrie;
+import com.lab.autocomplete.Trie.Tuple;
 import org.junit.Before;
 import org.junit.Test;
 import java.io.File;
@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
  * Created by Mantixop on 1/19/16.
  */
 
-public class TrieTest {
+public class TrieFileTest {
 
     public static RWayTrie <Integer> rWayTrie;
     public static String fileName = "test.txt";

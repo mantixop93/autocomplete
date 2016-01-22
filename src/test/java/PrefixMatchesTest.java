@@ -1,6 +1,6 @@
-import com.lab.autocomplete.PrefixMatches;
-import com.lab.autocomplete.RWayTrie;
-import com.lab.autocomplete.Tuple;
+import com.lab.autocomplete.PrefixMatches.PrefixMatches;
+import com.lab.autocomplete.Trie.RWayTrie;
+import com.lab.autocomplete.Trie.Tuple;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;

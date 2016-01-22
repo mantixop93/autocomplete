@@ -1,4 +1,4 @@
-package com.lab.autocomplete;
+package com.lab.autocomplete.Trie;
 
 import java.util.Queue;
 import java.util.NoSuchElementException;
@@ -121,7 +121,7 @@ public class RWayTrie<T> implements Trie<T> {
             Node iteratorRoot = contains(root, pref, 0);
             if (iteratorRoot != null) {
                 queue.add(new Tuple<Node>(pref, iteratorRoot));
-                nextNode = skipToNextNode();
+                nextNode = getNextNode();
             }
         }
 
@@ -129,7 +129,7 @@ public class RWayTrie<T> implements Trie<T> {
             return nextNode != null ? true : false;
         }
 
-        private Tuple<Node> skipToNextNode() {
+        private Tuple<Node> getNextNode() {
             Tuple<Node> tuple = queue.poll();
             while (tuple != null) {
                 for (int i = 0; i < R; i++) {
@@ -149,7 +149,7 @@ public class RWayTrie<T> implements Trie<T> {
         public Object next() {
             if (nextNode != null) {
                 String result = nextNode.getKey();
-                nextNode = skipToNextNode();
+                nextNode = getNextNode();
                 return result;
             }
             throw new NoSuchElementException();

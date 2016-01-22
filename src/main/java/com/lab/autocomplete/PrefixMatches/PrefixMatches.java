@@ -1,7 +1,9 @@
-package com.lab.autocomplete;
+package com.lab.autocomplete.PrefixMatches;
 
+import com.lab.autocomplete.Trie.RWayTrie;
+import com.lab.autocomplete.Trie.Tuple;
+import com.lab.autocomplete.Trie.Trie;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 /**
  * Created by Mantixop on 1/20/16.
