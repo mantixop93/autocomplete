@@ -1,7 +1,7 @@
 package com.lab.autocomplete;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Created by Mantixop on 1/20/16.
@@ -11,6 +11,7 @@ public class PrefixMatches {
 
     private Trie<Integer> trie;
     private static final int DEFAULT_PREFIX_LENGTH = 3;
+    private static final int MIN_WORD_LENGTH = 2;
 
     public PrefixMatches() {
         this.trie = new RWayTrie<Integer>();
@@ -50,15 +51,55 @@ public class PrefixMatches {
     }
 
     public Iterable<String> wordsWithPrefix(final String pref, final int k) {
-        Queue<String> queue = new LinkedList<String>();
-        if (pref.length() >= 2) {
-            for (String word : trie.wordsWithPrefix(pref)) {
-                if ((pref.length() + k) > word.length()) {
-                    queue.add(word);
-                }
+        return new Iterable<String>() {
+            public Iterator<String> iterator() {
+                return new Iterator<String>() {
+                    private String next;
+                    private Iterator<String> trieIterator;
+                    {
+                        trieIterator = trie.wordsWithPrefix(pref).iterator();
+                        next = skipToFirst();
+                    }
+
+                    public boolean hasNext() {
+                        if (next != null) {
+                            return true;
+                        }
+                        return false;
+                    }
+
+                    private String skipToFirst(){
+                        String result = null;
+                        while (trieIterator.hasNext()) {
+                            result = trieIterator.next();
+                            if (result.length() >=  MIN_WORD_LENGTH) {
+                                break;
+                            }
+                        }
+                        return result;
+
+                    }
+
+                    private String getNext() {
+                        String nextWord = trieIterator.next();
+                        if (nextWord.length() > pref.length() + k - 1) {
+                            return null;
+                        }
+                        return nextWord;
+                    }
+
+                    public String next() {
+                        String result = next;
+                        next = getNext();
+                        return result;
+                    }
+
+                    public void remove() {
+                        throw new UnsupportedOperationException();
+                    }
+                };
             }
-        }
-        return queue;
+        };
     }
 
     public Iterable<String> wordsWithPrefix(final String pref) {
