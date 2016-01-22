@@ -94,7 +94,11 @@ public class PrefixMatches {
                     public String next() {
                         if (next == null) throw new NoSuchElementException();
                         String result = next;
-                        next = getNext();
+                        if (trieIterator.hasNext()) {
+                            next = getNext();
+                        } else {
+                            next = null;
+                        }
                         return result;
                     }
 

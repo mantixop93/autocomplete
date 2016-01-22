@@ -49,7 +49,6 @@ public class PrefixMatchesTest {
     @Test
     public void testAddWord() {
         prefixMatches.add("test");
-        //when(rWayTrie.contains("test")).thenReturn(true);
         verify(rWayTrie).add(new Tuple<Integer>("test", "test".length()));
     }
 
