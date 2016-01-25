@@ -1,4 +1,4 @@
-package com.lab.autocomplete.Trie;
+package com.lab.autocomplete.trie;
 
 public interface  Trie<T> {
 

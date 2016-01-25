@@ -1,8 +1,8 @@
-package com.lab.autocomplete.PrefixMatches;
+package com.lab.autocomplete.matches;
 
-import com.lab.autocomplete.Trie.RWayTrie;
-import com.lab.autocomplete.Trie.Tuple;
-import com.lab.autocomplete.Trie.Trie;
+import com.lab.autocomplete.trie.RWayTrie;
+import com.lab.autocomplete.trie.Tuple;
+import com.lab.autocomplete.trie.Trie;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 

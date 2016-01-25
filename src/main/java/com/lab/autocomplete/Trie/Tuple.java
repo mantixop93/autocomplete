@@ -1,4 +1,4 @@
-package com.lab.autocomplete.Trie;
+package com.lab.autocomplete.trie;
 
 /**
  * Created by Mantixop on 1/18/16.

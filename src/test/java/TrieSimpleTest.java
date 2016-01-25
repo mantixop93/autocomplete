@@ -1,5 +1,5 @@
-import com.lab.autocomplete.Trie.RWayTrie;
-import com.lab.autocomplete.Trie.Tuple;
+import com.lab.autocomplete.trie.RWayTrie;
+import com.lab.autocomplete.trie.Tuple;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.Iterator;

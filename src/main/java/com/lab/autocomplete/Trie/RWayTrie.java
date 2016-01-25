@@ -1,4 +1,4 @@
-package com.lab.autocomplete.Trie;
+package com.lab.autocomplete.trie;
 
 import java.util.Queue;
 import java.util.NoSuchElementException;
@@ -93,7 +93,7 @@ public class RWayTrie<T> implements Trie<T> {
     public Iterable<String> wordsWithPrefix(final String pref) {
         return new Iterable<String>() {
             public Iterator<String> iterator() {
-                return new TrieIterator(pref);
+                return new TrieIterator<String>(pref);
             }
         };
     }
@@ -113,20 +113,18 @@ public class RWayTrie<T> implements Trie<T> {
         return words().toString();
     }
 
-    private class TrieIterator implements Iterator {
+    private class TrieIterator <T> implements Iterator {
         private Queue<Tuple<Node>> queue = new LinkedList<Tuple<Node>>();
-        private Tuple<Node> nextNode;
 
         TrieIterator(final String pref) {
             Node iteratorRoot = contains(root, pref, 0);
             if (iteratorRoot != null) {
                 queue.add(new Tuple<Node>(pref, iteratorRoot));
-                nextNode = getNextNode();
             }
         }
 
         public boolean hasNext() {
-            return nextNode != null ? true : false;
+            return !queue.isEmpty();
         }
 
         private Tuple<Node> getNextNode() {
@@ -146,11 +144,9 @@ public class RWayTrie<T> implements Trie<T> {
             return null;
         }
 
-        public Object next() {
-            if (nextNode != null) {
-                String result = nextNode.getKey();
-                nextNode = getNextNode();
-                return result;
+        public T next() {
+            if (hasNext()) {
+                return (T) getNextNode().getKey();
             }
             throw new NoSuchElementException();
         }
